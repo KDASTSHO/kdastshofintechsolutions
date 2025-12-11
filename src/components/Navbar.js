@@ -13,7 +13,7 @@ export default function Navbar() {
   const [serviceOpen, setServiceOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [userDropdown, setUserDropdown] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // 🔥 admin check state
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const db = getFirestore();
@@ -45,7 +45,7 @@ export default function Navbar() {
         firstName: userSnap.exists() ? userSnap.data().firstName : "User",
       });
 
-      // 🔥 Email-based admin access
+      // Admin check
       setIsAdmin(email === "ceo@kdastshofintechsolutions.com");
     });
 
@@ -58,15 +58,11 @@ export default function Navbar() {
     { name: "Blog", to: "/Blog" },
     { name: "Spin", to: "/Home" },
 
-    // ❌ Dashboard removed from public nav — now shown only in user dropdown when admin
     {
       name: "Services",
       dropdown: [
         { name: "Software Development", to: "/services/software-development" },
-        {
-          name: "Company Registration & Tax Filing",
-          to: "/services/company-tax",
-        },
+        { name: "Company Registration & Tax Filing", to: "/services/company-tax" },
         { name: "Investments", to: "/services/investments" },
       ],
     },
@@ -119,6 +115,7 @@ export default function Navbar() {
                 <button className="cursor-pointer text-lg font-semibold text-black">
                   {item.name} ▾
                 </button>
+
                 <AnimatePresence>
                   {serviceOpen && (
                     <motion.div
@@ -154,7 +151,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Icons + Mobile Toggle */}
+        {/* Icons */}
         <div className="flex items-center space-x-4 relative">
           {/* User Icon */}
           {user ? (
@@ -166,7 +163,6 @@ export default function Navbar() {
                 <FaUserCircle />
               </button>
 
-              {/* USER DROPDOWN */}
               <AnimatePresence>
                 {userDropdown && (
                   <motion.div
@@ -177,7 +173,6 @@ export default function Navbar() {
                     transition={{ duration: 0.2 }}
                     className="absolute right-0 mt-2 bg-white dark:bg-black shadow-xl rounded-xl py-2 w-52 flex flex-col z-50"
                   >
-                    {/* My Profile */}
                     <button
                       onClick={() => {
                         navigate("/Myprofile");
@@ -188,7 +183,6 @@ export default function Navbar() {
                       My Profile
                     </button>
 
-                    {/* My Applications */}
                     {!isAdmin && (
                       <button
                         onClick={() => {
@@ -201,7 +195,6 @@ export default function Navbar() {
                       </button>
                     )}
 
-                    {/* 🔥 Dashboard visible only for admin */}
                     {isAdmin && (
                       <button
                         onClick={() => {
@@ -210,11 +203,10 @@ export default function Navbar() {
                         }}
                         className="text-left px-4 py-2 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-md transition-colors mt-1"
                       >
-                        🛡️ Dashboard
+                        🛡 Dashboard
                       </button>
                     )}
 
-                    {/* Logout */}
                     <button
                       onClick={handleLogout}
                       className="text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-md transition-colors mt-1"
@@ -251,7 +243,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -269,6 +261,7 @@ export default function Navbar() {
                   >
                     {item.name} ▾
                   </button>
+
                   <AnimatePresence>
                     {serviceOpen && (
                       <motion.div
@@ -304,11 +297,12 @@ export default function Navbar() {
                 </Link>
               )
             )}
-            )}
-            {/* Mobile user dropdown */}
+
+            {/* ⬇ THIS WAS THE EXTRA WRONG )} — REMOVED */}
+
+            {/* MOBILE USER DROPDOWN */}
             {user && (
               <div className="mt-2 border-t border-gray-300 dark:border-gray-700 pt-2 space-y-1">
-                {/* Profile */}
                 <button
                   onClick={() => {
                     navigate("/Myprofile");
@@ -331,7 +325,6 @@ export default function Navbar() {
                   </button>
                 )}
 
-                {/* 🔥 Admin Dashboard only for CEO */}
                 {isAdmin && (
                   <button
                     onClick={() => {
@@ -340,11 +333,10 @@ export default function Navbar() {
                     }}
                     className="block text-left py-2 px-4 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors font-semibold"
                   >
-                    🛡️ Dashboard
+                    🛡 Dashboard
                   </button>
                 )}
 
-                {/* Logout */}
                 <button
                   onClick={handleLogout}
                   className="block text-left py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"

@@ -2,35 +2,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import FooterBanner from "../components/FooterBanner";
+import useTheme from "../hooks/useTheme";
 
-// Blog card (no animation)
 const BlogCard = ({ post }) => {
   return (
-    <article className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-200 mx-auto max-w-3xl">
+    <article className="rounded-lg overflow-hidden shadow-md mx-auto max-w-2xl 
+      bg-white dark:bg-[#1f1f1f] border border-gray-200 dark:border-gray-700">
+      
       <img
         src={post.img}
         alt={post.title}
-        className="w-full h-96 object-cover rounded-t-lg"
+        className="w-full h-72 object-cover rounded-t-lg"
         loading="lazy"
       />
 
-      <div className="p-6">
-        <div className="flex items-center gap-3 mb-3">
+      <div className="p-5">
+        <div className="flex items-center gap-3 mb-2">
           <span className="text-xs px-3 py-1 rounded-full bg-[#8D5A3A]/20 text-[#8D5A3A] font-semibold">
             {post.category}
           </span>
-          <span className="text-xs text-gray-500">{post.date}</span>
-          <span className="ml-auto text-xs text-gray-500">⏱ {post.read}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">{post.date}</span>
+          <span className="ml-auto text-xs text-gray-500 dark:text-gray-400">⏱ {post.read}</span>
         </div>
 
-        <h3 className="text-2xl font-semibold leading-snug mb-3">{post.title}</h3>
+        <h3 className="text-xl font-semibold leading-snug mb-2 text-gray-900 dark:text-white">
+          {post.title}
+        </h3>
 
-        <p className="text-sm text-gray-700 mb-5">{post.description}</p>
+        <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+          {post.description}
+        </p>
 
-        {/* Use Link so navigation is handled by react-router */}
         <Link
           to="/blog/digital-transformation"
-          className="inline-block px-5 py-2 rounded bg-[#8D5A3A] text-white font-semibold hover:bg-[#74462D] transition"
+          className="inline-block px-4 py-2 rounded bg-[#8D5A3A] text-white font-semibold hover:bg-[#74462D] transition"
         >
           Read More
         </Link>
@@ -40,11 +45,13 @@ const BlogCard = ({ post }) => {
 };
 
 const BlogPage = () => {
+  const [darkMode] = useTheme();
+
   const blogPosts = [
     {
-      title: "Digital Transformation for SMEs",
+      title: "Nifty 50 & Bank Nifty Outlook",
       description:
-        "KDASTSHO Fintech Solutions helps SMEs and MSMEs leverage technology for efficient operations, secure financial transactions, and robust digital solutions tailored to their business needs.",
+        "Indian equities step into Week 50 in a phase of tight consolidation. Strong domestic inflows continue to cushion downside moves.",
       img: "/images/post-0.jpg",
       category: "Business",
       date: "Dec 11, 2025",
@@ -55,18 +62,20 @@ const BlogPage = () => {
   return (
     <>
       <div style={{ height: "var(--navbar-height, 80px)" }} />
-      <section className="min-h-screen font-sans" style={{ backgroundColor: "#F6EFE8", paddingTop: "24px" }}>
+
+      <section
+        className={`min-h-screen font-sans pt-16 transition-colors ${
+          darkMode ? "bg-[#0f0f0f]" : "bg-[#F6EFE8]"
+        }`}
+      >
         <div className="max-w-5xl mx-auto px-6 pb-20">
-          <div className="grid grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 gap-6">
             <BlogCard post={blogPosts[0]} />
           </div>
 
-          {/* Footer banner below card (shifted right): change translate-x to move */}
-          <div className="mt-12">
-            <div className="max-w-5xl mx-auto flex justify-center">
-              <div className="w-full max-w-4xl transform translate-x-10">
-                <FooterBanner />
-              </div>
+          <div className="mt-12 flex justify-center">
+            <div className="w-full max-w-4xl">
+              <FooterBanner />
             </div>
           </div>
         </div>

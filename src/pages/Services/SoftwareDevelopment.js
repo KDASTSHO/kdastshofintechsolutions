@@ -178,15 +178,6 @@ const ComplexSolutionsPage = () => {
                 that have an impact. From idea to delivery — UI/UX, development,
                 testing, deployment and continual support.
               </p>
-              {/*<motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0px 5px 15px rgba(0,0,0,0.3)",
-                }}
-                className="bg-[#8D5A3A] hover:bg-[#7a4b2f] text-white px-6 py-3 rounded-lg shadow-md transition-all duration-300"
-              >
-                <Link to="/softgetstart">View Solutions</Link>
-              </motion.button>*/}
             </div>
 
             {/* Right Image */}
@@ -224,7 +215,6 @@ const ComplexSolutionsPage = () => {
                 alt="Phone mockup"
                 className="w-48 h-56 object-cover rounded-lg shadow-lg border-2 border-white"
               />
-              
             </div>
 
             {/* Right Text */}
@@ -332,7 +322,17 @@ const ComplexSolutionsPage = () => {
 
                 {/* CTA Buttons */}
                 <div className="mt-8 flex gap-3 justify-center flex-wrap">
-                  <button className="px-5 py-2.5 text-sm font-medium rounded-xl bg-[#8D5A3A] text-white hover:bg-[#7a4b2f] transition">
+                  {/* Updated Plan Now button to behave like Book a Call */}
+                  <button
+                    className="px-5 py-2.5 text-sm font-medium rounded-xl bg-[#8D5A3A] text-white hover:bg-[#7a4b2f] transition"
+                    onClick={() => {
+                      if (!auth.currentUser) {
+                        alert("Please login to book a call");
+                        return;
+                      }
+                      openCallModal(solution);
+                    }}
+                  >
                     Plan Now
                   </button>
 
@@ -445,7 +445,6 @@ const ComplexSolutionsPage = () => {
         {/* =======================
           WHY CHOOSE SECTION
       ======================= */}
-        {/* WHY TO CHOOSE */}
         <motion.section
           className={`mt-12 py-10 rounded-2xl ${subtleSectionBg}`}
           initial="hidden"
@@ -464,7 +463,7 @@ const ComplexSolutionsPage = () => {
               variants={staggerContainer}
               className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"
             >
-              {[
+             {[
                 {
                   num: "01",
                   title: "Security Features",

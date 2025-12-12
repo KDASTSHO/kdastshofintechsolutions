@@ -203,7 +203,7 @@ export default function Navbar() {
                         }}
                         className="text-left px-4 py-2 font-semibold text-white bg-green-600 hover:bg-green-700 rounded-md transition-colors mt-1"
                       >
-                        🛡️ Dashboard
+                        🛡 Dashboard
                       </button>
                     )}
 
@@ -298,7 +298,7 @@ export default function Navbar() {
               )
             )}
 
-            {/* ⬇️ THIS WAS THE EXTRA WRONG `)}` — REMOVED */}
+            {/* ⬇ THIS WAS THE EXTRA WRONG )} — REMOVED */}
 
             {/* MOBILE USER DROPDOWN */}
             {user && (
@@ -333,7 +333,7 @@ export default function Navbar() {
                     }}
                     className="block text-left py-2 px-4 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors font-semibold"
                   >
-                    🛡️ Dashboard
+                    🛡 Dashboard
                   </button>
                 )}
 

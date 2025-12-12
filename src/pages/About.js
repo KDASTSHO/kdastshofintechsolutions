@@ -1,6 +1,7 @@
 // src/components/AboutUsSection.js
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   FaLaptopCode,
   FaFileInvoiceDollar,
@@ -16,7 +17,6 @@ import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-import { AnimatePresence } from "framer-motion";
 // Fix default marker icon issue (Leaflet requires this in React)
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -32,13 +32,12 @@ const AboutUsSection = () => {
   const [darkMode] = useTheme();
   const [showSpinWheel, setShowSpinWheel] = useState(false);
   const [hasSpun, setHasSpun] = useState(false);
-  const [prize, setPrize] = useState("");
+  // prize should be an object (icon + text)
+  const [prize, setPrize] = useState({ icon: null, text: "" });
   const [rotation, setRotation] = useState(0);
   const [celebrate, setCelebrate] = useState(false);
   const [showResultPopup, setShowResultPopup] = useState(false);
   const [wheelSize, setWheelSize] = useState(300);
-
-  // Prize list with icons
 
   const textColor = darkMode ? "text-white" : "text-gray-900";
 
@@ -92,10 +91,11 @@ const AboutUsSection = () => {
     },
   };
 
-  // ------------------- Services Data -------------------
+  // ------------------- Services Data (with slugs matching App.js) -------------------
   const services = [
     {
       title: "Software Development",
+      slug: "software-development", // route: /services/software-development
       description:
         "We offer complete software development services, creating scalable, safe, and quick digital solutions that are suited to your company's requirements. We manage UI/UX, development, testing, and deployment with excellent quality and dependability from concept to launch.",
       icon: (
@@ -108,6 +108,7 @@ const AboutUsSection = () => {
     },
     {
       title: "Company Registration & Tax Filing",
+      slug: "company-tax", // route: /services/company-tax (matches your App.js)
       description:
         "With our easy company formation help, you can get your business off to a great start. We take care of the whole process, from picking the right business form to completing legal paperwork and getting government approvals.",
       icon: (
@@ -120,6 +121,7 @@ const AboutUsSection = () => {
     },
     {
       title: "Investments",
+      slug: "investments", // route: /services/investments
       description:
         "Investment Services offer personalized financial solutions designed to help you build long-term wealth. Services include portfolio management, risk assessment, goal-based planning, mutual funds, stocks, bonds, and digital investment tools.",
       icon: (
@@ -132,7 +134,7 @@ const AboutUsSection = () => {
     },
   ];
 
-  // ------------------- Ads Data -------------------
+  // ------------------- Ads Data & form -------------------
   const [showForm, setShowForm] = useState(false);
   const [formName, setFormName] = useState("");
   const [formPhone, setFormPhone] = useState("");
@@ -170,18 +172,25 @@ const AboutUsSection = () => {
     description:
       "Reach thousands of potential customers and increase conversions with our premium advertising service. Simple, fast, and effective.",
   };
+
   // ------------------- Contact Form State -------------------
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
 
   // 🔥 Submit handler - store in Firebase
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !phone || !message) {
+    if (
+      !firstName ||
+      !lastName ||
+      !contactEmail ||
+      !contactPhone ||
+      !contactMessage
+    ) {
       alert("Please fill in all fields");
       return;
     }
@@ -190,9 +199,9 @@ const AboutUsSection = () => {
       await addDoc(collection(db, "contact_details"), {
         firstName,
         lastName,
-        email,
-        phone,
-        message,
+        email: contactEmail,
+        phone: contactPhone,
+        message: contactMessage,
         createdAt: serverTimestamp(),
       });
 
@@ -201,9 +210,9 @@ const AboutUsSection = () => {
       // Clear input fields
       setFirstName("");
       setLastName("");
-      setEmail("");
-      setPhone("");
-      setMessage("");
+      setContactEmail("");
+      setContactPhone("");
+      setContactMessage("");
     } catch (error) {
       console.error("Error saving contact details:", error);
       alert("Failed to submit message!");
@@ -226,7 +235,7 @@ const AboutUsSection = () => {
     <section
       className={`pt-32 md:pt-36 pb-16 transition-colors duration-500 ${sectionBg} min-h-screen`}
     >
-      {/* RESULT POPUP AFTER WIN (Rest of your code remains the same) */}
+      {/* RESULT POPUP AFTER WIN */}
       <AnimatePresence>
         {showResultPopup && (
           <motion.div
@@ -294,7 +303,7 @@ const AboutUsSection = () => {
 
           <div
             className={`w-24 h-1 mx-auto mt-2 rounded-full transition-colors duration-500 ${headingColor}`}
-          ></div>
+          />
         </motion.div>
 
         {/* ------------------- About Us Content ------------------- */}
@@ -347,7 +356,7 @@ const AboutUsSection = () => {
             <h3 className="text-2xl font-bold mb-4 text-[#8D5A3A]">Vision</h3>
 
             <p>
-              Clear & Concise Vision Statement “Kdastsho’s long-term vision is
+              Clear & Concise Vision Statement — Kdastsho’s long-term vision is
               to build products and services that create wealth and prosperity
               for individuals and businesses of all sizes. Through technology,
               we enable faster, more robust, and impactful business outcomes,
@@ -370,7 +379,7 @@ const AboutUsSection = () => {
               Services We Offer
             </h2>
 
-            <div className="w-24 h-1 mx-auto mt-2 rounded-full bg-green-800"></div>
+            <div className="w-24 h-1 mx-auto mt-2 rounded-full bg-green-800" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -389,15 +398,22 @@ const AboutUsSection = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3">{service.title}</h3>
                 <p className="text-sm mb-6">{service.description}</p>
-                <motion.button
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0px 4px 15px rgba(0,0,0,0.3)",
-                  }}
-                  className={`mt-auto ${buttonBg} ${buttonText} px-4 py-2 rounded transition-all duration-300`}
+
+                <Link
+                  to={`/services/${service.slug}`}
+                  aria-label={`Read more about ${service.title}`}
+                  className="mt-auto block w-full"
                 >
-                  Read More
-                </motion.button>
+                  <motion.button
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0px 4px 15px rgba(0,0,0,0.3)",
+                    }}
+                    className={`w-full ${buttonBg} ${buttonText} px-4 py-2 rounded transition-all duration-300`}
+                  >
+                    Read More
+                  </motion.button>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -415,7 +431,7 @@ const AboutUsSection = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-[#8D5A3A]">
               Sponsored Ad
             </h2>
-            <div className="w-24 h-1 mx-auto mt-2 rounded-full bg-green-800"></div>
+            <div className="w-24 h-1 mx-auto mt-2 rounded-full bg-green-800" />
           </motion.div>
 
           {/* POPUP — will show when user clicks Contact Now */}
@@ -432,9 +448,7 @@ const AboutUsSection = () => {
                 exit={{ scale: 0.7 }}
                 transition={{ duration: 0.35 }}
                 className={`w-full max-w-md p-6 rounded-2xl shadow-xl ${
-                  darkMode
-                    ? "bg-[#101010] text-white"
-                    : "bg-white text-gray-900"
+                  darkMode ? "bg-[#101010] text-white" : "bg-white text-gray-900"
                 }`}
               >
                 <h3 className="text-2xl font-bold mb-4 text-center">
@@ -448,9 +462,7 @@ const AboutUsSection = () => {
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
                     className={`p-3 rounded-lg border ${
-                      darkMode
-                        ? "bg-black border-gray-600 text-white"
-                        : "bg-gray-100 border-gray-300"
+                      darkMode ? "bg-black border-gray-600 text-white" : "bg-gray-100 border-gray-300"
                     }`}
                   />
 
@@ -460,9 +472,7 @@ const AboutUsSection = () => {
                     value={formPhone}
                     onChange={(e) => setFormPhone(e.target.value)}
                     className={`p-3 rounded-lg border ${
-                      darkMode
-                        ? "bg-black border-gray-600 text-white"
-                        : "bg-gray-100 border-gray-300"
+                      darkMode ? "bg-black border-gray-600 text-white" : "bg-gray-100 border-gray-300"
                     }`}
                   />
 
@@ -472,9 +482,7 @@ const AboutUsSection = () => {
                     value={formMessage}
                     onChange={(e) => setFormMessage(e.target.value)}
                     className={`p-3 rounded-lg border ${
-                      darkMode
-                        ? "bg-black border-gray-600 text-white"
-                        : "bg-gray-100 border-gray-300"
+                      darkMode ? "bg-black border-gray-600 text-white" : "bg-gray-100 border-gray-300"
                     }`}
                   />
                 </div>
@@ -553,9 +561,7 @@ const AboutUsSection = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-[#8D5A3A]">
               Contact Us
             </h2>
-            <div
-              className={`w-24 h-1 mx-auto mt-2 rounded-full ${headingColor}`}
-            ></div>
+            <div className={`w-24 h-1 mx-auto mt-2 rounded-full ${headingColor}`} />
           </motion.div>
 
           {/* Form & Map */}
@@ -589,21 +595,21 @@ const AboutUsSection = () => {
                   type="email"
                   placeholder="Email"
                   className={`w-full rounded p-2 border border-gray-300 ${inputBg}`}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
                 />
                 <input
                   type="tel"
                   placeholder="Phone Number"
                   className={`w-full rounded p-2 border border-gray-300 ${inputBg}`}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  value={contactPhone}
+                  onChange={(e) => setContactPhone(e.target.value)}
                 />
                 <textarea
                   placeholder="Message"
                   className={`w-full rounded p-2 border border-gray-300 ${inputBg} h-32 resize-none`}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  value={contactMessage}
+                  onChange={(e) => setContactMessage(e.target.value)}
                 />
                 <motion.button
                   whileHover={{

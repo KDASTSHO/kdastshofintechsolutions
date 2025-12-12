@@ -18,7 +18,7 @@ export default function RewardsInfo() {
       icon: Coins,
       description: `K-Coins are our digital reward currency.
 • Each K-Coin holds a redemption value of ₹0.01.
-• Use K-Coins for mobile recharges and across KdashTo products.
+• Use K-Coins for mobile recharges and across Kdastsho products.
 • Future products may also be purchased with K-Coins, subject to terms.
 • Accumulated coins can be viewed and redeemed within your account.`,
     },
@@ -83,7 +83,7 @@ export default function RewardsInfo() {
 
           {/* Footer */}
           <footer className="mt-12 text-center text-xs text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} KdashTo — Rewards subject to
+            © {new Date().getFullYear()} Kdastsho — Rewards subject to
             availability.
           </footer>
         </div>

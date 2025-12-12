@@ -10,7 +10,6 @@ export default function BlogPost() {
 
     return (
         <>
-            <Navbar />
 
             <main
                 className={`pt-24 min-h-screen transition-all duration-300 ${
@@ -219,7 +218,6 @@ export default function BlogPost() {
             </main>
 
             <FooterBanner />
-            <Footer />
         </>
     );
 }

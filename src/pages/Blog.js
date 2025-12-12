@@ -10,8 +10,8 @@ const BlogCard = ({ post }) => {
       bg-white dark:bg-[#1f1f1f] border border-gray-200 dark:border-gray-700">
       
       <img
-        src="/images/Post-0v2.jpg"
-        alt={post.title}
+        src="/nifty.jpg"
+        alt="nifty 50"
         className="w-full h-72 object-cover rounded-t-lg"
         loading="lazy"
       />

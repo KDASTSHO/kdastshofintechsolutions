@@ -187,6 +187,12 @@ export default function BlogPost() {
                             </p>
                         </section>
                     </article>
+                    <img
+                        src={post.img}
+                        alt={post.title}
+                        className="w-full h-auto object-contain rounded-t-lg"
+                        loading="lazy"
+                    />
                 </div>
             </main>
         </>

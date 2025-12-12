@@ -4,8 +4,8 @@ const FooterBanner = ({ intervalMs = 3000, maxWidth = "1200px" }) => {
   const images = [
     "/images/Ad.png",
     "/images/p1.jpg",
-    "/images/p2.jpg",
-    "/images/p3.jpg",
+    "/images/P2.jpg",
+    "/images/P3.jpg",
   ];
 
   const [index, setIndex] = useState(0);
@@ -144,5 +144,4 @@ const FooterBanner = ({ intervalMs = 3000, maxWidth = "1200px" }) => {
     </div>
   );
 };
-
 export default FooterBanner;

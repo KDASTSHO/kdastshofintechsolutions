@@ -152,7 +152,7 @@ const Terms = () => {
   const TermBlock = ({ type, color, icon, content, isLast }) => (
     <div className="flex">
       <div className="flex flex-col items-center mr-6">
-        <div className={w-14 h-14 ${color} rounded-full flex items-center justify-center shadow-lg}>
+        <div className={`w-14 h-14 ${color} rounded-full flex items-center justify-center shadow-lg`}>
           {icon}
         </div>
 
@@ -170,7 +170,7 @@ const Terms = () => {
           darkMode ? "border-gray-700" : "border-gray-300"
         } pl-6 pb-10`}
       >
-        <div className={inline-block px-3 py-1 text-sm font-semibold text-white ${color} rounded-md uppercase tracking-wider}>
+        <div className={`inline-block px-3 py-1 text-sm font-semibold text-white ${color} rounded-md uppercase tracking-wider`}>
           {type}
         </div>
 

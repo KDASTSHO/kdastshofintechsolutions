@@ -32,7 +32,7 @@ const Footer = ({ darkMode }) => {
         <div className="flex flex-col items-start gap-4">
           <Link to="/" onClick={scrollToTop}>
             <img
-              src="/images/logok.png"
+              src="/logok.png"
               alt="KDastsho Logo"
               className="w-24 md:w-28 rounded-full shadow-md hover:scale-105 hover:shadow-[0_0_18px_#DB6A2E] transition-all duration-500 cursor-pointer"
             />

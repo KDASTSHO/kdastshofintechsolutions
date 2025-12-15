@@ -60,7 +60,7 @@ const LoginCard = () => {
 
     try {
       await sendPasswordResetEmail(auth, email);
-      setErrorMsg("Password reset link sent to your email");
+      setErrorMsg("Reset link sent. Check your inbox or spam folder.");
     } catch (error) {
       setErrorMsg(
         error.message.includes("user-not-found")

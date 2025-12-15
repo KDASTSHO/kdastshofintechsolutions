@@ -252,22 +252,7 @@ const SignUpForm = () => {
           </button>
         </form>
 
-        {/* <p className="text-center text-sm mt-5 text-[#2b1d16] dark:text-[#f5e8da]">
-          or
-        </p>
-
-        {/* Social Icons */}
-        <div className="flex justify-center items-center gap-6 mt-5">
-          <div className="p-3 rounded-full bg-white hover:scale-110 transition shadow-md cursor-pointer">
-            <FaFacebookF className="text-[#1773EA] text-xl" />
-          </div>
-          <div className="p-3 rounded-full bg-white hover:scale-110 transition shadow-md cursor-pointer">
-            <FcGoogle className="text-2xl" />
-          </div>
-          <div className="p-3 rounded-full bg-white hover:scale-110 transition shadow-md cursor-pointer">
-            <FaApple className="text-black text-2xl" />
-          </div>
-        </div>*/}
+        
       </motion.div>
     </div>
   );

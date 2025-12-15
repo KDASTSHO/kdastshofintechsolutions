@@ -25,7 +25,7 @@ import Home from "./pages/Home";
 import Terms from "./components/Terms";
 import Privacy from "./components/Privacy";
 import BlogPost from "./pages/BlogPost";
-
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   // global dark mode state
@@ -74,7 +74,14 @@ function App() {
         <Route path="/services/company-tax" element={<CompanyTax />} />
         <Route path="/services/investments" element={<Investments />} />
         <Route path="/investments2" element={<Investments2 />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
 
         <Route path="/login" element={<LoginCard />} />
       </Routes>

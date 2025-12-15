@@ -252,7 +252,7 @@ const SignUpForm = () => {
           </button>
         </form>
 
-        <p className="text-center text-sm mt-5 text-[#2b1d16] dark:text-[#f5e8da]">
+        {/* <p className="text-center text-sm mt-5 text-[#2b1d16] dark:text-[#f5e8da]">
           or
         </p>
 
@@ -267,7 +267,7 @@ const SignUpForm = () => {
           <div className="p-3 rounded-full bg-white hover:scale-110 transition shadow-md cursor-pointer">
             <FaApple className="text-black text-2xl" />
           </div>
-        </div>
+        </div>*/}
       </motion.div>
     </div>
   );

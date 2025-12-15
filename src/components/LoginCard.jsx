@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const LoginCard = () => {
   const [animateCard, setAnimateCard] = useState(false);
@@ -46,6 +47,25 @@ const LoginCard = () => {
         error.message.includes("auth")
           ? "Invalid email or password"
           : "Something went wrong"
+      );
+    }
+  };
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      setErrorMsg("Please enter your email to reset password");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setErrorMsg("Password reset link sent to your email");
+    } catch (error) {
+      setErrorMsg(
+        error.message.includes("user-not-found")
+          ? "No account found with this email"
+          : "Failed to send reset email"
       );
     }
   };
@@ -103,6 +123,7 @@ const LoginCard = () => {
           />
           <a
             href="#"
+            onClick={handleForgotPassword}
             className="text-right text-sm mt-1 text-[#5c3928] hover:underline dark:text-[#ffdfb1]"
           >
             forgot password?

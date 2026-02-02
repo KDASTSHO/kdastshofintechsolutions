@@ -56,7 +56,7 @@ export default function Navbar() {
     { name: "About", to: "/About1" },
     { name: "Careers", to: "/Careers" },
     { name: "Blog", to: "/Blog" },
-      {/*{ name: "Spin", to: "/Home" },*/}
+   // { name: "Spin", to: "/Home" },
 
     {
       name: "Services",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Myprofile from "./pages/Myprofile";
@@ -45,6 +46,7 @@ function App() {
         darkMode ? "dark bg-gray-900 text-white" : "bg-white text-black"
       }
     >
+      <Analytics />
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 
       <Routes>
